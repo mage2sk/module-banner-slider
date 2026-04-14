@@ -1,0 +1,58 @@
+{
+    "panth_banner_slider": {
+        "column": {
+            "slider_id": true,
+            "identifier": true,
+            "title": true,
+            "is_active": true,
+            "autoplay": true,
+            "autoplay_speed": true,
+            "transition_speed": true,
+            "effect": true,
+            "is_loop": true,
+            "show_arrows": true,
+            "show_dots": true,
+            "pause_on_hover": true,
+            "store_id": true,
+            "created_at": true,
+            "updated_at": true
+        },
+        "index": {
+            "PANTH_BANNER_SLIDER_IS_ACTIVE": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "PANTH_BANNER_SLIDER_IDENTIFIER": true
+        }
+    },
+    "panth_banner_slide": {
+        "column": {
+            "slide_id": true,
+            "slider_id": true,
+            "identifier": true,
+            "title": true,
+            "is_active": true,
+            "desktop_image": true,
+            "tablet_image": true,
+            "mobile_image": true,
+            "content_html": true,
+            "link_url": true,
+            "link_target": true,
+            "alt_text": true,
+            "sort_order": true,
+            "date_from": true,
+            "date_to": true,
+            "store_id": true,
+            "created_at": true,
+            "updated_at": true
+        },
+        "index": {
+            "PANTH_BANNER_SLIDE_SLIDER_ID": true,
+            "PANTH_BANNER_SLIDE_IS_ACTIVE": true,
+            "PANTH_BANNER_SLIDE_SORT_ORDER": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    }
+}

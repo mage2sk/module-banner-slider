@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+
+    <!-- Grid Collections for UI Component Listings — real classes with explicit _idFieldName -->
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="panth_bannerslider_slider_listing_data_source" xsi:type="string">Panth\BannerSlider\Model\ResourceModel\Slider\Grid\Collection</item>
+                <item name="panth_bannerslider_slide_listing_data_source" xsi:type="string">Panth\BannerSlider\Model\ResourceModel\Slide\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Panth BannerSlider Frontend Layout
+ *
+ * @category  Panth
+ * @package   Panth_BannerSlider
+ * @author    Panth
+ * @copyright Copyright (c) Panth
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <!-- CSS loaded via _module.less on Luma (compiled into styles-m.css) -->
+    <!-- Hyva loads banner-slider.css via inline styles in template -->
+</page>

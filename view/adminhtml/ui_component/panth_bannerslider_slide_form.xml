@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">panth_bannerslider_slide_form.panth_bannerslider_slide_form_data_source</item>
+        </item>
+        <item name="label" xsi:type="string" translate="true">Slide Information</item>
+        <item name="template" xsi:type="string">templates/form/collapsible</item>
+    </argument>
+
+    <settings>
+        <buttons>
+            <button name="back" class="Magento\Cms\Block\Adminhtml\Page\Edit\BackButton"/>
+            <button name="delete" class="Panth\BannerSlider\Block\Adminhtml\Slide\Edit\DeleteButton"/>
+            <button name="save" class="Panth\BannerSlider\Block\Adminhtml\Slide\Edit\SaveButton"/>
+            <button name="save_and_continue" class="Panth\BannerSlider\Block\Adminhtml\Slide\Edit\SaveAndContinueButton"/>
+        </buttons>
+        <namespace>panth_bannerslider_slide_form</namespace>
+        <dataScope>data</dataScope>
+        <deps>
+            <dep>panth_bannerslider_slide_form.panth_bannerslider_slide_form_data_source</dep>
+        </deps>
+    </settings>
+
+    <dataSource name="panth_bannerslider_slide_form_data_source">
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+            </item>
+        </argument>
+        <settings>
+            <submitUrl path="panth_bannerslider/slide/save"/>
+        </settings>
+        <dataProvider class="Panth\BannerSlider\Ui\DataProvider\SlideFormDataProvider" name="panth_bannerslider_slide_form_data_source">
+            <settings>
+                <requestFieldName>slide_id</requestFieldName>
+                <primaryFieldName>slide_id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+
+    <!-- General Information -->
+    <fieldset name="general" sortOrder="10">
+        <settings>
+            <collapsible>false</collapsible>
+            <label translate="true">General Information</label>
+        </settings>
+
+        <field name="slide_id" formElement="input">
+            <settings>
+                <dataType>text</dataType>
+                <visible>false</visible>
+            </settings>
+        </field>
+
+        <field name="slider_id" formElement="select" sortOrder="5">
+            <settings>
+                <dataType>int</dataType>
+                <label translate="true">Assign to Slider</label>
+                <notice translate="true">Select which slider this banner belongs to. Create sliders under Manage Sliders first.</notice>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="Panth\BannerSlider\Model\Config\Source\SliderOptions"/>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+
+        <field name="title" formElement="input" sortOrder="20">
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Title</label>
+                <notice translate="true">Internal title for admin reference</notice>
+            </settings>
+        </field>
+
+        <field name="is_active" formElement="checkbox" sortOrder="30">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="number">1</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>boolean</dataType>
+                <label translate="true">Active</label>
+            </settings>
+            <formElements>
+                <checkbox>
+                    <settings>
+                        <valueMap>
+                            <map name="false" xsi:type="number">0</map>
+                            <map name="true" xsi:type="number">1</map>
+                        </valueMap>
+                        <prefer>toggle</prefer>
+                    </settings>
+                </checkbox>
+            </formElements>
+        </field>
+
+        <field name="store_id" formElement="select" sortOrder="40">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="number">0</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>int</dataType>
+                <label translate="true">Store View</label>
+                <notice translate="true">0 = All Store Views</notice>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="Magento\Store\Ui\Component\Listing\Column\Store\Options"/>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+
+        <field name="sort_order" formElement="input" sortOrder="50">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="number">0</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Sort Order</label>
+                <validation>
+                    <rule name="validate-digits" xsi:type="boolean">true</rule>
+                </validation>
+            </settings>
+        </field>
+    </fieldset>
+
+    <!-- Images -->
+    <fieldset name="images" sortOrder="20">
+        <settings>
+            <collapsible>true</collapsible>
+            <label translate="true">Images</label>
+        </settings>
+
+        <field name="desktop_image" formElement="imageUploader" sortOrder="10">
+            <settings>
+                <label translate="true">Desktop Image</label>
+                <notice translate="true">Desktop screens (1024px and above). Recommended size: 1920 x 600 pixels. Use JPG/WebP for photos, PNG for graphics with transparency.</notice>
+            </settings>
+            <formElements>
+                <imageUploader>
+                    <settings>
+                        <allowedExtensions>jpg jpeg png gif webp svg</allowedExtensions>
+                        <maxFileSize>10485760</maxFileSize>
+                        <uploaderConfig>
+                            <param xsi:type="url" name="url" path="panth_bannerslider/upload/image"/>
+                        </uploaderConfig>
+                    </settings>
+                </imageUploader>
+            </formElements>
+        </field>
+
+        <field name="tablet_image" formElement="imageUploader" sortOrder="20">
+            <settings>
+                <label translate="true">Tablet Image</label>
+                <notice translate="true">Optional. Tablet screens (768px–1023px). Recommended size: 1024 x 500 pixels. Falls back to desktop image if left empty.</notice>
+            </settings>
+            <formElements>
+                <imageUploader>
+                    <settings>
+                        <allowedExtensions>jpg jpeg png gif webp svg</allowedExtensions>
+                        <maxFileSize>10485760</maxFileSize>
+                        <uploaderConfig>
+                            <param xsi:type="url" name="url" path="panth_bannerslider/upload/image"/>
+                        </uploaderConfig>
+                    </settings>
+                </imageUploader>
+            </formElements>
+        </field>
+
+        <field name="mobile_image" formElement="imageUploader" sortOrder="30">
+            <settings>
+                <label translate="true">Mobile Image</label>
+                <notice translate="true">Optional. Mobile screens (below 768px). Recommended size: 768 x 500 pixels. Falls back to tablet image, then desktop image if left empty.</notice>
+            </settings>
+            <formElements>
+                <imageUploader>
+                    <settings>
+                        <allowedExtensions>jpg jpeg png gif webp svg</allowedExtensions>
+                        <maxFileSize>10485760</maxFileSize>
+                        <uploaderConfig>
+                            <param xsi:type="url" name="url" path="panth_bannerslider/upload/image"/>
+                        </uploaderConfig>
+                    </settings>
+                </imageUploader>
+            </formElements>
+        </field>
+
+        <field name="alt_text" formElement="input" sortOrder="40">
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Image Alt Text</label>
+                <notice translate="true">Accessibility text for screen readers and SEO</notice>
+            </settings>
+        </field>
+    </fieldset>
+
+    <!-- Content & Link -->
+    <fieldset name="content" sortOrder="30">
+        <settings>
+            <collapsible>true</collapsible>
+            <label translate="true">Content &amp; Link</label>
+        </settings>
+
+        <field name="content_html" formElement="wysiwyg" sortOrder="10">
+            <settings>
+                <label translate="true">Content Overlay HTML</label>
+                <notice translate="true">Optional HTML content displayed as an overlay on the slide. Supports CMS directives.</notice>
+            </settings>
+            <formElements>
+                <wysiwyg>
+                    <settings>
+                        <rows>8</rows>
+                        <wysiwyg>true</wysiwyg>
+                    </settings>
+                </wysiwyg>
+            </formElements>
+        </field>
+
+        <field name="link_url" formElement="input" sortOrder="20">
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Link URL</label>
+                <notice translate="true">Full URL or relative path. Leave empty for no link.</notice>
+            </settings>
+        </field>
+
+        <field name="link_target" formElement="select" sortOrder="30">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="string">_self</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Link Target</label>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options>
+                            <option name="self" xsi:type="array">
+                                <item name="value" xsi:type="string">_self</item>
+                                <item name="label" xsi:type="string" translate="true">Same Window</item>
+                            </option>
+                            <option name="blank" xsi:type="array">
+                                <item name="value" xsi:type="string">_blank</item>
+                                <item name="label" xsi:type="string" translate="true">New Tab</item>
+                            </option>
+                        </options>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+    </fieldset>
+
+    <!-- Schedule -->
+    <fieldset name="schedule" sortOrder="40">
+        <settings>
+            <collapsible>true</collapsible>
+            <label translate="true">Schedule</label>
+        </settings>
+
+        <field name="date_from" formElement="date" sortOrder="10">
+            <settings>
+                <dataType>string</dataType>
+                <label translate="true">Active From</label>
+                <notice translate="true">Leave empty for no start restriction</notice>
+            </settings>
+        </field>
+
+        <field name="date_to" formElement="date" sortOrder="20">
+            <settings>
+                <dataType>string</dataType>
+                <label translate="true">Active To</label>
+                <notice translate="true">Leave empty for no end restriction</notice>
+            </settings>
+        </field>
+    </fieldset>
+</form>

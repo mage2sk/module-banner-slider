@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Panth BannerSlider Module Configuration
+ *
+ * @category  Panth
+ * @package   Panth_BannerSlider
+ * @author    Panth
+ * @copyright Copyright (c) Panth
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
+    <module name="Panth_BannerSlider">
+        <sequence>
+            <module name="Magento_Cms"/>
+            <module name="Magento_Store"/>
+            <module name="Magento_Widget"/>
+            <module name="Magento_Backend"/>
+            <module name="Panth_Core"/>
+        </sequence>
+    </module>
+</config>

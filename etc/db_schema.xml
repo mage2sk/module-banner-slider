@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Panth Infotech. All rights reserved.
+ * Two-entity architecture: Sliders (parent) → Slides (children)
+ */
+-->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+
+    <!-- Parent: Sliders -->
+    <table name="panth_banner_slider" resource="default" engine="innodb" comment="Panth Banner Sliders">
+        <column xsi:type="int" name="slider_id" unsigned="true" nullable="false" identity="true" comment="Slider ID"/>
+        <column xsi:type="varchar" name="identifier" nullable="false" length="255" comment="Unique Identifier"/>
+        <column xsi:type="varchar" name="title" nullable="false" length="255" comment="Slider Title"/>
+        <column xsi:type="smallint" name="is_active" unsigned="true" nullable="false" default="1" comment="Is Active"/>
+        <column xsi:type="smallint" name="autoplay" unsigned="true" nullable="false" default="1" comment="Autoplay Enabled"/>
+        <column xsi:type="int" name="autoplay_speed" unsigned="true" nullable="false" default="5000" comment="Autoplay Speed (ms)"/>
+        <column xsi:type="int" name="transition_speed" unsigned="true" nullable="false" default="600" comment="Transition Speed (ms)"/>
+        <column xsi:type="varchar" name="effect" nullable="false" length="20" default="fade" comment="Transition Effect"/>
+        <column xsi:type="smallint" name="is_loop" unsigned="true" nullable="false" default="1" comment="Infinite Loop"/>
+        <column xsi:type="smallint" name="show_arrows" unsigned="true" nullable="false" default="1" comment="Show Arrows"/>
+        <column xsi:type="smallint" name="show_dots" unsigned="true" nullable="false" default="1" comment="Show Dots"/>
+        <column xsi:type="smallint" name="pause_on_hover" unsigned="true" nullable="false" default="1" comment="Pause on Hover"/>
+        <column xsi:type="smallint" name="store_id" unsigned="true" nullable="false" default="0" comment="Store View"/>
+        <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP" comment="Created At"/>
+        <column xsi:type="timestamp" name="updated_at" on_update="true" nullable="false" default="CURRENT_TIMESTAMP" comment="Updated At"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="slider_id"/>
+        </constraint>
+        <constraint xsi:type="unique" referenceId="PANTH_BANNER_SLIDER_IDENTIFIER">
+            <column name="identifier"/>
+        </constraint>
+        <index referenceId="PANTH_BANNER_SLIDER_IS_ACTIVE" indexType="btree">
+            <column name="is_active"/>
+        </index>
+    </table>
+
+    <!-- Child: Slides (banners) — linked to Slider via slider_id -->
+    <table name="panth_banner_slide" resource="default" engine="innodb" comment="Panth Banner Slides">
+        <column xsi:type="int" name="slide_id" unsigned="true" nullable="false" identity="true" comment="Slide ID"/>
+        <column xsi:type="int" name="slider_id" unsigned="true" nullable="false" default="0" comment="Parent Slider ID"/>
+        <column xsi:type="varchar" name="identifier" nullable="true" length="255" comment="Legacy Identifier"/>
+        <column xsi:type="varchar" name="title" nullable="true" length="255" comment="Slide Title"/>
+        <column xsi:type="smallint" name="is_active" unsigned="true" nullable="false" default="1" comment="Is Active"/>
+        <column xsi:type="varchar" name="desktop_image" nullable="true" length="512" comment="Desktop Image"/>
+        <column xsi:type="varchar" name="tablet_image" nullable="true" length="512" comment="Tablet Image"/>
+        <column xsi:type="varchar" name="mobile_image" nullable="true" length="512" comment="Mobile Image"/>
+        <column xsi:type="mediumtext" name="content_html" nullable="true" comment="Content HTML Overlay"/>
+        <column xsi:type="varchar" name="link_url" nullable="true" length="512" comment="Link URL"/>
+        <column xsi:type="varchar" name="link_target" nullable="true" length="20" default="_self" comment="Link Target"/>
+        <column xsi:type="varchar" name="alt_text" nullable="true" length="255" comment="Alt Text"/>
+        <column xsi:type="int" name="sort_order" unsigned="true" nullable="false" default="0" comment="Sort Order"/>
+        <column xsi:type="date" name="date_from" nullable="true" comment="Active From"/>
+        <column xsi:type="date" name="date_to" nullable="true" comment="Active To"/>
+        <column xsi:type="smallint" name="store_id" unsigned="true" nullable="false" default="0" comment="Store View"/>
+        <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP" comment="Created At"/>
+        <column xsi:type="timestamp" name="updated_at" on_update="true" nullable="false" default="CURRENT_TIMESTAMP" comment="Updated At"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="slide_id"/>
+        </constraint>
+        <index referenceId="PANTH_BANNER_SLIDE_SLIDER_ID" indexType="btree">
+            <column name="slider_id"/>
+        </index>
+        <index referenceId="PANTH_BANNER_SLIDE_IS_ACTIVE" indexType="btree">
+            <column name="is_active"/>
+        </index>
+        <index referenceId="PANTH_BANNER_SLIDE_SORT_ORDER" indexType="btree">
+            <column name="sort_order"/>
+        </index>
+    </table>
+</schema>

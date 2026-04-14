@@ -1,0 +1,51 @@
+{
+  "slider": {
+    "identifier": "minimal_announcements",
+    "title": "Minimal Announcement Bar",
+    "is_active": 1,
+    "autoplay": 1,
+    "autoplay_speed": 3000,
+    "transition_speed": 300,
+    "effect": "slide",
+    "is_loop": 1,
+    "show_arrows": 0,
+    "show_dots": 0,
+    "pause_on_hover": 1,
+    "store_id": 0
+  },
+  "slides": [
+    {
+      "title": "Free Returns",
+      "is_active": 1,
+      "desktop_image": "slide_minimal_announcements_1.jpg",
+      "mobile_image": "slide_minimal_announcements_1_mobile.jpg",
+      "content_html": "<div style=\"text-align:center;color:#fff;\"><p style=\"font-size:clamp(13px,2vw,16px);font-weight:500;margin:0;\">Free returns within 30 days — no questions asked</p></div>",
+      "link_url": "",
+      "alt_text": "Free returns policy",
+      "sort_order": 1,
+      "store_id": 0
+    },
+    {
+      "title": "New Store Opening",
+      "is_active": 1,
+      "desktop_image": "slide_minimal_announcements_2.jpg",
+      "mobile_image": "slide_minimal_announcements_2_mobile.jpg",
+      "content_html": "<div style=\"text-align:center;color:#fff;\"><p style=\"font-size:clamp(13px,2vw,16px);font-weight:500;margin:0;\">New flagship store opening in New York — <a href=\"/stores\" style=\"color:#fff;text-decoration:underline;\">Get directions</a></p></div>",
+      "link_url": "",
+      "alt_text": "New store opening announcement",
+      "sort_order": 2,
+      "store_id": 0
+    },
+    {
+      "title": "Loyalty Program",
+      "is_active": 1,
+      "desktop_image": "slide_minimal_announcements_3.jpg",
+      "mobile_image": "slide_minimal_announcements_3_mobile.jpg",
+      "content_html": "<div style=\"text-align:center;color:#fff;\"><p style=\"font-size:clamp(13px,2vw,16px);font-weight:500;margin:0;\">Join our loyalty program — earn points on every purchase — <a href=\"/rewards\" style=\"color:#fff;text-decoration:underline;\">Sign up free</a></p></div>",
+      "link_url": "",
+      "alt_text": "Loyalty program",
+      "sort_order": 3,
+      "store_id": 0
+    }
+  ]
+}

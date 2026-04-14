@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Panth BannerSlider Admin Layout
+ *
+ * @category  Panth
+ * @package   Panth_BannerSlider
+ * @author    Panth
+ * @copyright Copyright (c) Panth
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <!-- Any admin-specific CSS or JS can be added here if needed -->
+    </head>
+</page>

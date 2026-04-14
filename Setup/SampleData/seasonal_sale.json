@@ -1,0 +1,51 @@
+{
+  "slider": {
+    "identifier": "seasonal_sale",
+    "title": "Seasonal Sale Banners",
+    "is_active": 1,
+    "autoplay": 1,
+    "autoplay_speed": 4000,
+    "transition_speed": 400,
+    "effect": "fade",
+    "is_loop": 1,
+    "show_arrows": 0,
+    "show_dots": 1,
+    "pause_on_hover": 1,
+    "store_id": 0
+  },
+  "slides": [
+    {
+      "title": "Spring Sale - 30% Off",
+      "is_active": 1,
+      "desktop_image": "slide_seasonal_sale_1.jpg",
+      "mobile_image": "slide_seasonal_sale_1_mobile.jpg",
+      "content_html": "<div style=\"text-align:center;color:#fff;\"><h2 style=\"font-size:clamp(28px,5vw,40px);font-weight:800;margin:0 0 6px;line-height:1.1;\">SPRING SALE</h2><p style=\"font-size:clamp(20px,4vw,32px);font-weight:300;margin:0 0 16px;\">30% OFF Everything</p><a href=\"/sale.html\" style=\"display:inline-block;padding:12px 30px;background:#DC2626;color:#fff;font-weight:600;text-decoration:none;border-radius:6px;font-size:14px;\">Shop Sale</a></div>",
+      "link_url": "/sale.html",
+      "alt_text": "Spring Sale - 30% off everything",
+      "sort_order": 1,
+      "store_id": 0
+    },
+    {
+      "title": "Buy 2 Get 1 Free",
+      "is_active": 1,
+      "desktop_image": "slide_seasonal_sale_2.jpg",
+      "mobile_image": "slide_seasonal_sale_2_mobile.jpg",
+      "content_html": "<div style=\"text-align:center;color:#fff;\"><div style=\"display:inline-block;padding:5px 14px;background:rgba(255,255,255,0.2);border-radius:20px;font-size:12px;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;\">Special Offer</div><h2 style=\"font-size:clamp(26px,5vw,40px);font-weight:700;margin:0 0 8px;line-height:1.15;\">Buy 2, Get 1 Free</h2><p style=\"font-size:clamp(13px,2.5vw,16px);margin:0 0 16px;opacity:0.9;\">Mix and match across all categories</p><a href=\"/sale.html\" style=\"display:inline-block;padding:11px 28px;background:#fff;color:#7C3AED;font-weight:600;text-decoration:none;border-radius:6px;font-size:14px;\">Shop Now</a></div>",
+      "link_url": "/sale.html",
+      "alt_text": "Buy 2 Get 1 Free offer",
+      "sort_order": 2,
+      "store_id": 0
+    },
+    {
+      "title": "Clearance Up to 70% Off",
+      "is_active": 1,
+      "desktop_image": "slide_seasonal_sale_3.jpg",
+      "mobile_image": "slide_seasonal_sale_3_mobile.jpg",
+      "content_html": "<div style=\"text-align:center;color:#fff;\"><h2 style=\"font-size:clamp(26px,5vw,42px);font-weight:800;margin:0 0 8px;line-height:1.1;\">CLEARANCE</h2><p style=\"font-size:clamp(16px,3vw,24px);font-weight:300;margin:0 0 16px;\">Up to 70% Off</p><a href=\"/sale.html\" style=\"display:inline-block;padding:12px 30px;background:#F97316;color:#fff;font-weight:600;text-decoration:none;border-radius:6px;font-size:14px;\">Shop Clearance</a></div>",
+      "link_url": "/sale.html",
+      "alt_text": "Clearance sale up to 70% off",
+      "sort_order": 3,
+      "store_id": 0
+    }
+  ]
+}

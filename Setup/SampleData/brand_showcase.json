@@ -1,0 +1,51 @@
+{
+  "slider": {
+    "identifier": "brand_showcase",
+    "title": "Brand Showcase",
+    "is_active": 1,
+    "autoplay": 1,
+    "autoplay_speed": 7000,
+    "transition_speed": 800,
+    "effect": "fade",
+    "is_loop": 1,
+    "show_arrows": 1,
+    "show_dots": 0,
+    "pause_on_hover": 1,
+    "store_id": 0
+  },
+  "slides": [
+    {
+      "title": "About Our Brand",
+      "is_active": 1,
+      "desktop_image": "slide_brand_showcase_1.jpg",
+      "mobile_image": "slide_brand_showcase_1_mobile.jpg",
+      "content_html": "<div style=\"text-align:center;\"><h2 style=\"font-size:clamp(24px,5vw,36px);font-weight:700;color:#171717;margin:0 0 8px;\">Our Story</h2><p style=\"font-size:clamp(13px,2vw,16px);color:#525252;margin:0 0 16px;max-width:500px;\">Crafted with care since 2020. We believe in quality, sustainability, and timeless design.</p><a href=\"/about\" style=\"display:inline-block;padding:10px 24px;background:#0D9488;color:#fff;font-weight:600;text-decoration:none;border-radius:6px;font-size:14px;\">Learn More</a></div>",
+      "link_url": "",
+      "alt_text": "Our Brand Story",
+      "sort_order": 1,
+      "store_id": 0
+    },
+    {
+      "title": "Sustainability Commitment",
+      "is_active": 1,
+      "desktop_image": "slide_brand_showcase_2.jpg",
+      "mobile_image": "slide_brand_showcase_2_mobile.jpg",
+      "content_html": "<div style=\"text-align:center;\"><h2 style=\"font-size:clamp(24px,5vw,36px);font-weight:700;color:#171717;margin:0 0 8px;\">Sustainable Fashion</h2><p style=\"font-size:clamp(13px,2vw,16px);color:#525252;margin:0 0 16px;max-width:500px;\">100% recycled packaging. Ethically sourced materials. Carbon neutral by 2027.</p><a href=\"/about\" style=\"display:inline-block;padding:10px 24px;border:2px solid #0D9488;color:#0D9488;font-weight:600;text-decoration:none;border-radius:6px;font-size:14px;\">Our Commitment</a></div>",
+      "link_url": "",
+      "alt_text": "Sustainability Commitment",
+      "sort_order": 2,
+      "store_id": 0
+    },
+    {
+      "title": "Customer Reviews",
+      "is_active": 1,
+      "desktop_image": "slide_brand_showcase_3.jpg",
+      "mobile_image": "slide_brand_showcase_3_mobile.jpg",
+      "content_html": "<div style=\"text-align:center;\"><p style=\"font-size:clamp(18px,3vw,28px);font-weight:300;color:#374151;font-style:italic;margin:0 0 12px;max-width:600px;line-height:1.5;\">\"The best online shopping experience I've ever had. Quality products, fast delivery!\"</p><p style=\"font-size:14px;font-weight:600;color:#0D9488;margin:0;\">— Sarah K., Verified Buyer</p></div>",
+      "link_url": "",
+      "alt_text": "Customer testimonial",
+      "sort_order": 3,
+      "store_id": 0
+    }
+  ]
+}

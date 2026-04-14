@@ -1,0 +1,515 @@
+<?php
+/**
+ * Banner Slides Configuration Template
+ * Custom template with horizontal table layout and pagination
+ *
+ * @var $block \Panth\BannerSlider\Block\Adminhtml\System\Config\Slides
+ */
+?>
+
+<style>
+.banner-slides-container td.value {
+    width: 100% !important;
+    max-width: none !important;
+}
+
+.banner-slides-container {
+    width: 100% !important;
+    max-width: 900px !important;
+    overflow: hidden !important;
+}
+
+.banner-slides-outer-wrapper {
+    max-width: 100% !important;
+    overflow: visible !important;
+}
+
+.banner-slides-table-wrapper {
+    overflow-x: auto !important;
+    overflow-y: visible !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    border: 1px solid #ccc;
+    margin-bottom: 10px !important;
+    display: block !important;
+    position: relative !important;
+    -webkit-overflow-scrolling: touch;
+}
+
+.banner-slides-table {
+    width: auto !important;
+    min-width: 2400px !important;
+    table-layout: fixed !important;
+    border-collapse: collapse !important;
+    display: table !important;
+}
+
+.banner-slides-table thead th {
+    white-space: nowrap !important;
+    padding: 8px !important;
+    background: #f0f0f0 !important;
+    border: 1px solid #ccc !important;
+    font-weight: bold !important;
+    text-align: left !important;
+}
+
+.banner-slides-table tbody td {
+    padding: 8px !important;
+    border: 1px solid #ccc !important;
+    vertical-align: top !important;
+}
+
+.banner-slides-table tbody tr {
+    display: table-row !important;
+}
+
+.banner-slides-table tbody tr.pagination-hidden {
+    display: none !important;
+}
+
+.banner-slides-table .col-identifier {
+    width: 150px !important;
+}
+
+.banner-slides-table .col-enabled {
+    width: 80px !important;
+}
+
+.banner-slides-table .col-desktop_image,
+.banner-slides-table .col-tablet_image,
+.banner-slides-table .col-mobile_image {
+    width: 180px !important;
+}
+
+.banner-slides-table .col-content_html {
+    width: 450px !important;
+    min-width: 450px !important;
+}
+
+.banner-slides-table .col-link_url {
+    width: 200px !important;
+}
+
+.banner-slides-table .col-date_from,
+.banner-slides-table .col-date_to {
+    width: 150px !important;
+}
+
+.banner-slides-table .col-sort_order {
+    width: 100px !important;
+}
+
+.banner-slides-table .col-actions {
+    width: 100px !important;
+}
+</style>
+
+<div id="<?= $block->escapeHtmlAttr($block->getElement()->getHtmlId()) ?>" class="banner-slides-container">
+    <div class="banner-slides-outer-wrapper">
+        <div class="banner-slides-table-wrapper">
+            <table class="admin__control-table banner-slides-table" id="<?= $block->escapeHtmlAttr($block->getElement()->getHtmlId()) ?>_table">
+                <thead>
+                    <tr>
+                        <th class="col-identifier"><?= $block->escapeHtml(__('Identifier')) ?></th>
+                        <th class="col-enabled"><?= $block->escapeHtml(__('Enabled')) ?></th>
+                        <th class="col-desktop_image"><?= $block->escapeHtml(__('Desktop Image')) ?></th>
+                        <th class="col-tablet_image"><?= $block->escapeHtml(__('Tablet Image')) ?></th>
+                        <th class="col-mobile_image"><?= $block->escapeHtml(__('Mobile Image')) ?></th>
+                        <th class="col-content_html"><?= $block->escapeHtml(__('Content HTML')) ?></th>
+                        <th class="col-link_url"><?= $block->escapeHtml(__('Link URL')) ?></th>
+                        <th class="col-date_from"><?= $block->escapeHtml(__('Start Date')) ?></th>
+                        <th class="col-date_to"><?= $block->escapeHtml(__('End Date')) ?></th>
+                        <th class="col-sort_order"><?= $block->escapeHtml(__('Sort Order')) ?></th>
+                        <th class="col-actions"><?= $block->escapeHtml(__('Action')) ?></th>
+                    </tr>
+                </thead>
+                <tbody class="banner-slides-tbody" data-page="1" data-per-page="5">
+                    <tr class="no-data-row" style="display: none;">
+                        <td colspan="11" class="no-data-message">
+                            <?= $block->escapeHtml(__('No banner slides added yet. Click "Add Banner Slide" to create one.')) ?>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Pagination Controls -->
+        <?php $elementId = $block->escapeHtmlAttr($block->getElement()->getHtmlId()); ?>
+        <div id="<?= /* @noEscape */ $elementId ?>_pagination_controls" class="banner-slides-pagination-controls" style="display: none; margin-top: 10px;">
+            <div class="pagination-info" style="float: left; line-height: 32px;">
+                <span id="<?= /* @noEscape */ $elementId ?>_page_info"></span>
+            </div>
+            <div class="pagination-buttons" style="float: right;">
+                <button type="button" class="action-default" id="<?= /* @noEscape */ $elementId ?>_prev_page" style="margin-right: 5px;">
+                    <span><?= $block->escapeHtml(__('Previous')) ?></span>
+                </button>
+                <span id="<?= /* @noEscape */ $elementId ?>_page_numbers" style="margin: 0 10px;"></span>
+                <button type="button" class="action-default" id="<?= /* @noEscape */ $elementId ?>_next_page">
+                    <span><?= $block->escapeHtml(__('Next')) ?></span>
+                </button>
+            </div>
+            <div style="clear: both;"></div>
+        </div>
+
+        <button type="button" class="action-default scalable add banner-slides-add-btn" id="<?= /* @noEscape */ $elementId ?>_add_button" style="margin-top: 10px;">
+            <span><?= $block->escapeHtml(__('Add Banner Slide')) ?></span>
+        </button>
+    </div>
+</div>
+
+<script>
+require([
+    'jquery',
+    'Magento_Ui/js/modal/alert',
+    'domReady!'
+], function($, alert) {
+    var tableId = '<?= $block->escapeJs($block->getElement()->getHtmlId()) ?>';
+    var $table = $('#' + tableId + '_table');
+    var $tbody = $table.find('.banner-slides-tbody');
+    var $addButton = $('#' + tableId + '_add_button');
+    var rowIndex = 0;
+    var mediaUrl = '<?= $block->escapeJs($block->getMediaUrl()) ?>';
+    var uploadUrl = '<?= $block->escapeUrl($block->getUploadUrl()) ?>';
+
+    // Pagination variables
+    var rowsPerPage = 5;
+    var currentPage = 1;
+    var totalPages = 1;
+
+    // Initialize existing rows
+    <?php if ($block->getElement()->getValue()): ?>
+        var existingData = <?= /* @noEscape */ $block->getValueJson() ?>;
+        if (existingData && typeof existingData === 'object') {
+            $.each(existingData, function(index, rowData) {
+                if (rowData && typeof rowData === 'object') {
+                    addRow(rowData);
+                }
+            });
+            updateNoDataMessage();
+            setTimeout(function() {
+                initPagination();
+            }, 500);
+        }
+    <?php endif; ?>
+
+    // Add new row
+    $addButton.on('click', function() {
+        addRow({});
+        setTimeout(function() {
+            initPagination();
+        }, 100);
+    });
+
+    // Delete row
+    $tbody.on('click', '.action-delete', function() {
+        $(this).closest('tr').remove();
+        updateNoDataMessage();
+        setTimeout(function() {
+            initPagination();
+        }, 100);
+    });
+
+    // Image upload functionality
+    $tbody.on('click', '.banner-image-upload-btn', function(e) {
+        e.preventDefault();
+        var inputId = $(this).data('input-id');
+        var $input = $('#' + inputId);
+        var $preview = $input.siblings('.banner-image-preview');
+        var $deleteBtn = $(this).siblings('.banner-image-delete-btn');
+        var $uploadBtn = $(this);
+
+        var $fileInput = $('<input type="file" accept="image/*" style="display:none;">');
+        $('body').append($fileInput);
+
+        $fileInput.on('change', function() {
+            var file = this.files[0];
+            if (file) {
+                $uploadBtn.addClass('disabled').prop('disabled', true);
+                $uploadBtn.find('span').text('<?= $block->escapeJs(__('Uploading...')) ?>');
+
+                var formData = new FormData();
+                formData.append('image', file);
+                formData.append('form_key', window.FORM_KEY);
+
+                $.ajax({
+                    url: uploadUrl,
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    dataType: 'json',
+                    success: function(response) {
+                        if (response.success && response.path) {
+                            $input.val(response.path);
+                            var img = document.createElement('img');
+                            img.src = response.url;
+                            img.alt = 'Preview';
+                            img.style.cssText = 'max-width: 150px; max-height: 100px; display: block; margin-bottom: 5px;';
+                            $preview.empty().append(img);
+                            $deleteBtn.show();
+                        } else {
+                            alert({
+                                content: '<?= $block->escapeJs(__('Error uploading image.')) ?>'
+                            });
+                        }
+                    },
+                    error: function() {
+                        alert({
+                            content: '<?= $block->escapeJs(__('Error uploading image.')) ?>'
+                        });
+                    },
+                    complete: function() {
+                        $uploadBtn.removeClass('disabled').prop('disabled', false);
+                        $uploadBtn.find('span').text('<?= $block->escapeJs(__('Upload Image')) ?>');
+                    }
+                });
+            }
+            $fileInput.remove();
+        });
+
+        $fileInput.click();
+    });
+
+    // Image delete functionality
+    $tbody.on('click', '.banner-image-delete-btn', function(e) {
+        e.preventDefault();
+        var inputId = $(this).data('input-id');
+        var $input = $('#' + inputId);
+        var $preview = $input.siblings('.banner-image-preview');
+        $input.val('');
+        $preview.html('');
+        $(this).hide();
+    });
+
+    // Initialize TinyMCE function
+    function initTinyMCE(editorId) {
+        if (typeof tinyMCE !== 'undefined' && tinyMCE.get(editorId)) {
+            return;
+        }
+
+        require(['tinymce'], function(tinymce) {
+            tinymce.init({
+                selector: '#' + editorId,
+                height: 200,
+                menubar: false,
+                plugins: 'lists link code',
+                toolbar: 'undo redo | bold italic underline | bullist numlist | link | code',
+                branding: false,
+                elementpath: false,
+                resize: false,
+                paste_as_text: true,
+                paste_data_images: false,
+                convert_urls: false
+            });
+        });
+    }
+
+    function addRow(data) {
+        var rowData = $.extend({
+            _id: 'row_' + (rowIndex++),
+            identifier: '',
+            enabled: '1',
+            desktop_image: '',
+            tablet_image: '',
+            mobile_image: '',
+            content_html: '',
+            link_url: '',
+            date_from: '',
+            date_to: '',
+            sort_order: ''
+        }, data);
+
+        var elementName = '<?= $block->escapeJs($block->getElement()->getName()) ?>';
+        var fieldId = '<?= $block->escapeJs($block->getElement()->getHtmlId()) ?>';
+        var rowId = rowData._id;
+
+        var $row = $('<tr class="banner-slide-row"></tr>');
+
+        // Identifier column
+        var identifierHtml = '<td class="col-identifier">' +
+            '<input type="text" name="' + elementName + '[' + rowId + '][identifier]" ' +
+            'id="' + fieldId + '_' + rowId + '_identifier" ' +
+            'value="' + $('<div>').text(rowData.identifier || '').html() + '" ' +
+            'class="input-text admin__control-text required-entry" style="width:150px;" ' +
+            'placeholder="e.g., homepage_banner" />' +
+            '</td>';
+        $row.append(identifierHtml);
+
+        // Enabled column
+        var enabledHtml = '<td class="col-enabled">' +
+            '<select name="' + elementName + '[' + rowId + '][enabled]" ' +
+            'id="' + fieldId + '_' + rowId + '_enabled" class="admin__control-select">' +
+            '<option value="1"' + (rowData.enabled == '1' ? ' selected' : '') + '><?= $block->escapeJs(__('Yes')) ?></option>' +
+            '<option value="0"' + (rowData.enabled == '0' ? ' selected' : '') + '><?= $block->escapeJs(__('No')) ?></option>' +
+            '</select></td>';
+        $row.append(enabledHtml);
+
+        // Image columns
+        $row.append(buildImageColumn(elementName, fieldId, rowId, 'desktop_image', rowData.desktop_image));
+        $row.append(buildImageColumn(elementName, fieldId, rowId, 'tablet_image', rowData.tablet_image));
+        $row.append(buildImageColumn(elementName, fieldId, rowId, 'mobile_image', rowData.mobile_image));
+
+        // Content HTML column with WYSIWYG
+        var contentId = fieldId + '_' + rowId + '_content_html';
+        var contentHtml = '<td class="col-content_html">' +
+            '<textarea name="' + elementName + '[' + rowId + '][content_html]" ' +
+            'id="' + contentId + '" ' +
+            'class="admin__control-textarea wysiwyg-textarea" rows="5" style="width:100%;">' +
+            $('<div>').text(rowData.content_html || '').html() +
+            '</textarea>' +
+            '</td>';
+        $row.append(contentHtml);
+
+        setTimeout(function() {
+            initTinyMCE(contentId);
+        }, 300);
+
+        // Link URL column
+        var linkHtml = '<td class="col-link_url">' +
+            '<input type="text" name="' + elementName + '[' + rowId + '][link_url]" ' +
+            'id="' + fieldId + '_' + rowId + '_link_url" ' +
+            'value="' + $('<div>').text(rowData.link_url || '').html() + '" ' +
+            'class="input-text admin__control-text" style="width:200px;" />' +
+            '</td>';
+        $row.append(linkHtml);
+
+        // Date From column
+        var dateFromHtml = '<td class="col-date_from">' +
+            '<input type="date" name="' + elementName + '[' + rowId + '][date_from]" ' +
+            'id="' + fieldId + '_' + rowId + '_date_from" ' +
+            'value="' + $('<div>').text(rowData.date_from || '').html() + '" ' +
+            'class="input-text admin__control-text" style="width:150px;" />' +
+            '</td>';
+        $row.append(dateFromHtml);
+
+        // Date To column
+        var dateToHtml = '<td class="col-date_to">' +
+            '<input type="date" name="' + elementName + '[' + rowId + '][date_to]" ' +
+            'id="' + fieldId + '_' + rowId + '_date_to" ' +
+            'value="' + $('<div>').text(rowData.date_to || '').html() + '" ' +
+            'class="input-text admin__control-text" style="width:150px;" />' +
+            '</td>';
+        $row.append(dateToHtml);
+
+        // Sort Order column
+        var sortHtml = '<td class="col-sort_order">' +
+            '<input type="text" name="' + elementName + '[' + rowId + '][sort_order]" ' +
+            'id="' + fieldId + '_' + rowId + '_sort_order" ' +
+            'value="' + $('<div>').text(rowData.sort_order || '').html() + '" ' +
+            'class="input-text admin__control-text validate-number" style="width:60px;" />' +
+            '</td>';
+        $row.append(sortHtml);
+
+        // Actions column
+        var actionsHtml = '<td class="col-actions">' +
+            '<button type="button" class="action-default action-delete" title="<?= $block->escapeHtmlAttr(__('Delete')) ?>">' +
+            '<span><?= $block->escapeJs(__('Delete')) ?></span>' +
+            '</button>' +
+            '</td>';
+        $row.append(actionsHtml);
+
+        $tbody.append($row);
+        updateNoDataMessage();
+    }
+
+    function buildImageColumn(elementName, fieldId, rowId, columnName, value) {
+        var inputId = fieldId + '_' + rowId + '_' + columnName;
+        var imageUrl = value ? mediaUrl + value : '';
+
+        var html = '<td class="col-' + columnName + '">' +
+            '<div class="admin__field-control banner-slide-image-upload">' +
+            '<input type="hidden" name="' + elementName + '[' + rowId + '][' + columnName + ']" ' +
+            'id="' + inputId + '" ' +
+            'value="' + $('<div>').text(value || '').html() + '" ' +
+            'class="input-text admin__control-text banner-image-path" />' +
+            '<div class="banner-image-preview" style="' + (imageUrl ? '' : 'display: none;') + ' margin-bottom: 10px;">' +
+            (imageUrl ? '<img src="' + imageUrl + '" alt="Preview" style="max-width: 150px; max-height: 100px; border: 1px solid #ccc; padding: 5px;">' : '') +
+            '</div>' +
+            '<button type="button" class="action-default scalable banner-image-upload-btn" data-input-id="' + inputId + '" style="margin-right: 5px;">' +
+            '<span><?= $block->escapeJs(__('Upload')) ?></span></button>' +
+            '<button type="button" class="action-default scalable banner-image-delete-btn" data-input-id="' + inputId + '" style="' + (value ? '' : 'display: none;') + '">' +
+            '<span><?= $block->escapeJs(__('Delete')) ?></span></button>' +
+            '</div></td>';
+
+        return html;
+    }
+
+    function updateNoDataMessage() {
+        var $rows = $tbody.find('.banner-slide-row');
+        var $noDataRow = $tbody.find('.no-data-row');
+
+        if ($rows.length === 0) {
+            $noDataRow.show();
+        } else {
+            $noDataRow.hide();
+        }
+    }
+
+    function initPagination() {
+        var $rows = $tbody.find('.banner-slide-row');
+        var totalRows = $rows.length;
+
+        if (totalRows <= rowsPerPage) {
+            $('#' + tableId + '_pagination_controls').hide();
+            $rows.removeClass('pagination-hidden');
+            return;
+        }
+
+        $('#' + tableId + '_pagination_controls').show();
+        totalPages = Math.ceil(totalRows / rowsPerPage);
+        showPage(currentPage);
+    }
+
+    function showPage(page) {
+        var $rows = $tbody.find('.banner-slide-row');
+        $rows.addClass('pagination-hidden');
+
+        var start = (page - 1) * rowsPerPage;
+        var end = start + rowsPerPage;
+        $rows.slice(start, end).removeClass('pagination-hidden');
+
+        currentPage = page;
+        updatePaginationControls();
+    }
+
+    function updatePaginationControls() {
+        var $rows = $tbody.find('.banner-slide-row');
+        var totalRows = $rows.length;
+        var start = (currentPage - 1) * rowsPerPage + 1;
+        var end = Math.min(currentPage * rowsPerPage, totalRows);
+
+        $('#' + tableId + '_page_info').text('Showing ' + start + ' to ' + end + ' of ' + totalRows + ' entries');
+
+        $('#' + tableId + '_prev_page').prop('disabled', currentPage === 1);
+        $('#' + tableId + '_next_page').prop('disabled', currentPage === totalPages);
+
+        var $pageNumbers = $('#' + tableId + '_page_numbers');
+        $pageNumbers.html('');
+
+        for (var i = 1; i <= totalPages; i++) {
+            var $pageBtn = $('<button type="button" class="action-default page-number" data-page="' + i + '" style="margin: 0 2px;">' + i + '</button>');
+            if (i === currentPage) {
+                $pageBtn.addClass('active').css({'background-color': '#007bdb', 'color': '#fff'});
+            }
+            $pageNumbers.append($pageBtn);
+        }
+    }
+
+    $(document).on('click', '#' + tableId + '_prev_page', function() {
+        if (currentPage > 1) {
+            showPage(currentPage - 1);
+        }
+    });
+
+    $(document).on('click', '#' + tableId + '_next_page', function() {
+        if (currentPage < totalPages) {
+            showPage(currentPage + 1);
+        }
+    });
+
+    $(document).on('click', '.page-number', function() {
+        var page = parseInt($(this).data('page'));
+        showPage(page);
+    });
+});
+</script>

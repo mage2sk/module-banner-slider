@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+
+    <!-- Image Uploader Virtual Type -->
+    <virtualType name="Panth\BannerSlider\ImageUploader" type="Magento\Catalog\Model\ImageUploader">
+        <arguments>
+            <argument name="baseTmpPath" xsi:type="string">bannerslider/tmp</argument>
+            <argument name="basePath" xsi:type="string">bannerslider</argument>
+            <argument name="allowedExtensions" xsi:type="array">
+                <item name="jpg" xsi:type="string">jpg</item>
+                <item name="jpeg" xsi:type="string">jpeg</item>
+                <item name="gif" xsi:type="string">gif</item>
+                <item name="png" xsi:type="string">png</item>
+                <item name="webp" xsi:type="string">webp</item>
+                <item name="svg" xsi:type="string">svg</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <!-- Inject the same ImageUploader into Upload controller -->
+    <type name="Panth\BannerSlider\Controller\Adminhtml\Upload\Image">
+        <arguments>
+            <argument name="imageUploader" xsi:type="object">Panth\BannerSlider\ImageUploader</argument>
+        </arguments>
+    </type>
+
+    <!-- Inject the same ImageUploader into Slide Save controller -->
+    <type name="Panth\BannerSlider\Controller\Adminhtml\Slide\Save">
+        <arguments>
+            <argument name="imageUploader" xsi:type="object">Panth\BannerSlider\ImageUploader</argument>
+        </arguments>
+    </type>
+</config>

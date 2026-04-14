@@ -1,0 +1,51 @@
+{
+  "slider": {
+    "identifier": "category_promo",
+    "title": "Category Page Promotions",
+    "is_active": 1,
+    "autoplay": 1,
+    "autoplay_speed": 6000,
+    "transition_speed": 500,
+    "effect": "slide",
+    "is_loop": 1,
+    "show_arrows": 1,
+    "show_dots": 1,
+    "pause_on_hover": 1,
+    "store_id": 0
+  },
+  "slides": [
+    {
+      "title": "Women's Fashion",
+      "is_active": 1,
+      "desktop_image": "slide_category_promo_1.jpg",
+      "mobile_image": "slide_category_promo_1_mobile.jpg",
+      "content_html": "<div style=\"text-align:center;color:#fff;\"><h2 style=\"font-size:clamp(24px,4vw,36px);font-weight:700;margin:0 0 8px;\">Women's Fashion</h2><p style=\"font-size:clamp(13px,2vw,16px);margin:0 0 16px;opacity:0.9;\">Explore the latest trends in women's clothing</p><a href=\"/women.html\" style=\"display:inline-block;padding:10px 24px;background:#fff;color:#4F46E5;font-weight:600;text-decoration:none;border-radius:6px;font-size:13px;\">Shop Women</a></div>",
+      "link_url": "/women.html",
+      "alt_text": "Women's Fashion Collection",
+      "sort_order": 1,
+      "store_id": 0
+    },
+    {
+      "title": "Men's Collection",
+      "is_active": 1,
+      "desktop_image": "slide_category_promo_2.jpg",
+      "mobile_image": "slide_category_promo_2_mobile.jpg",
+      "content_html": "<div style=\"text-align:center;color:#fff;\"><h2 style=\"font-size:clamp(24px,4vw,36px);font-weight:700;margin:0 0 8px;\">Men's Collection</h2><p style=\"font-size:clamp(13px,2vw,16px);margin:0 0 16px;opacity:0.9;\">Premium quality, modern style</p><a href=\"/men.html\" style=\"display:inline-block;padding:10px 24px;background:#fff;color:#0D9488;font-weight:600;text-decoration:none;border-radius:6px;font-size:13px;\">Shop Men</a></div>",
+      "link_url": "/men.html",
+      "alt_text": "Men's Collection",
+      "sort_order": 2,
+      "store_id": 0
+    },
+    {
+      "title": "Accessories",
+      "is_active": 1,
+      "desktop_image": "slide_category_promo_3.jpg",
+      "mobile_image": "slide_category_promo_3_mobile.jpg",
+      "content_html": "<div style=\"text-align:center;color:#fff;\"><h2 style=\"font-size:clamp(24px,4vw,36px);font-weight:700;margin:0 0 8px;\">Complete Your Look</h2><p style=\"font-size:clamp(13px,2vw,16px);margin:0 0 16px;opacity:0.9;\">Bags, watches, and more</p><a href=\"/gear.html\" style=\"display:inline-block;padding:10px 24px;background:rgba(255,255,255,0.9);color:#171717;font-weight:600;text-decoration:none;border-radius:6px;font-size:13px;\">Shop Accessories</a></div>",
+      "link_url": "/gear.html",
+      "alt_text": "Accessories Collection",
+      "sort_order": 3,
+      "store_id": 0
+    }
+  ]
+}

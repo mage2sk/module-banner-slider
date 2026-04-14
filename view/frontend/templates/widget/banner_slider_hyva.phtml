@@ -1,0 +1,461 @@
+<?php
+/**
+ * Copyright © Panth Infotech. All rights reserved.
+ * Banner Slider — Hyva/Alpine.js Version
+ *
+ * Uses CSS variables from theme-config.json (banner-slider section)
+ * Supports: fade/slide transitions, autoplay, responsive images,
+ * touch swipe, keyboard nav, pause on hover, prev/next arrows, pagination dots
+ *
+ * @var $block \Panth\BannerSlider\Block\Widget\BannerSlider
+ * @var $escaper \Magento\Framework\Escaper
+ */
+
+if (!$block->canDisplay()) {
+    return;
+}
+
+$slides = $block->getSlides();
+$uniqueId = $block->getUniqueId();
+$helper = $block->getHelper();
+$config = $block->getSliderConfig();
+$slideCount = count($slides);
+$effect = $config['effect'] ?? 'fade';
+$showArrows = ($config['showArrows'] ?? true) && $slideCount > 1;
+$showDots = ($config['showDots'] ?? true) && $slideCount > 1;
+?>
+
+<style>
+    /* Banner Slider — all visual values from CSS variables (theme-config.json) */
+    .panth-banner-slider {
+        position: relative;
+        width: 100%;
+        overflow: hidden;
+        border-radius: var(--banner-border-radius, 0);
+    }
+
+    /* Slide track */
+    .panth-banner-track {
+        position: relative;
+        width: 100%;
+        height: var(--banner-height-desktop, 500px);
+    }
+
+    /* Individual slide */
+    .panth-banner-slide {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+    }
+    .panth-banner-slide img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+
+    /* Content overlay — subtle dark tint for text readability */
+    .panth-banner-content {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 3rem 4rem;
+        background: var(--banner-overlay-bg, rgba(0,0,0,0.25));
+        pointer-events: none;
+    }
+    .panth-banner-content > * { pointer-events: auto; }
+    .panth-banner-content-inner {
+        max-width: var(--banner-content-max-width, 800px);
+        width: 100%;
+        text-align: center;
+        color: #fff;
+    }
+
+    /* Navigation arrows — matches Hyva product carousel style */
+    .panth-banner-arrow {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 10;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 8px;
+        background: var(--color-surface, #fff);
+        color: var(--color-fg, #171717);
+        border: 1px solid var(--color-container-darker, #e5e5e5);
+        cursor: pointer;
+        transition: all 0.2s ease;
+        opacity: 0;
+    }
+    .panth-banner-slider:hover .panth-banner-arrow { opacity: 1; }
+    .panth-banner-arrow:hover {
+        background: var(--color-primary, #0D9488);
+        color: #fff;
+        border-color: var(--color-primary, #0D9488);
+    }
+    .panth-banner-arrow--prev { left: 16px; }
+    .panth-banner-arrow--next { right: 16px; }
+    .panth-banner-arrow svg {
+        width: 18px;
+        height: 18px;
+    }
+
+    /* Pagination dots — matches Hyva snap-marker style */
+    .panth-banner-dots {
+        position: absolute;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 10;
+        display: flex;
+        gap: 10px;
+        align-items: center;
+    }
+    .panth-banner-dot {
+        width: 14px;
+        height: 14px;
+        border-radius: 999px;
+        background: transparent;
+        border: 1px solid rgba(255,255,255,0.7);
+        cursor: pointer;
+        padding: 0;
+        transition: all 0.3s ease;
+    }
+    .panth-banner-dot--active {
+        width: 28px;
+        border-color: transparent;
+        background: var(--color-primary, #0D9488);
+    }
+
+    /* Tablet */
+    @media (max-width: 1023px) {
+        .panth-banner-track { height: var(--banner-height-tablet, 400px); }
+        .panth-banner-content { padding: 2rem 3rem; }
+        .panth-banner-arrow {
+            width: 36px;
+            height: 36px;
+            opacity: 1;
+        }
+    }
+
+    /* Mobile controls bar: dots left, arrows right — below slider */
+    .panth-banner-controls {
+        display: none;
+    }
+
+    /* Mobile */
+    @media (max-width: 767px) {
+        .panth-banner-slider { margin-left: 0; margin-right: 0; }
+        .panth-banner-track { height: var(--banner-height-mobile, 320px); }
+        .panth-banner-content {
+            padding: 1.5rem 1rem;
+            align-items: center;
+        }
+        /* Scale down content text on mobile */
+        .panth-banner-content-inner {
+            padding: 0 1rem;
+        }
+        .panth-banner-content-inner h2,
+        .panth-banner-content-inner h1 {
+            font-size: 26px !important;
+            line-height: 1.2 !important;
+            margin-bottom: 8px !important;
+        }
+        .panth-banner-content-inner p {
+            font-size: 13px !important;
+            line-height: 1.4 !important;
+            margin-bottom: 8px !important;
+        }
+        .panth-banner-content-inner a {
+            font-size: 13px !important;
+            padding: 10px 20px !important;
+        }
+        /* Hide desktop arrows (inside track) */
+        .panth-banner-arrow { display: none; }
+        /* Hide desktop dots (inside slider) */
+        .panth-banner-dots { display: none; }
+
+        /* Show mobile controls bar — same style as Hyva product carousel */
+        .panth-banner-controls {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 4px;
+        }
+        /* Dots: same as Hyva snap-marker */
+        .panth-banner-controls-dots {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        .panth-banner-controls-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 999px;
+            background: transparent;
+            border: 1px solid var(--color-fg-secondary, #a3a3a3);
+            cursor: pointer;
+            padding: 0;
+            transition: all 0.3s ease;
+        }
+        .panth-banner-controls-dot--active {
+            width: 28px;
+            border-color: transparent;
+            background: var(--color-primary, #0D9488);
+        }
+        /* Arrows: same as Hyva btn btn-secondary */
+        .panth-banner-controls-arrows {
+            display: flex;
+            gap: 4px;
+        }
+        .panth-banner-controls-arrows button {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            background: var(--color-surface, #fff);
+            color: var(--color-fg, #171717);
+            border: 1px solid var(--color-container-darker, #e5e5e5);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .panth-banner-controls-arrows button:active {
+            background: var(--color-primary, #0D9488);
+            color: #fff;
+            border-color: var(--color-primary, #0D9488);
+        }
+        .panth-banner-controls-arrows svg {
+            width: 18px;
+            height: 18px;
+        }
+    }
+</style>
+
+<div
+    id="<?= $escaper->escapeHtmlAttr($uniqueId) ?>"
+    class="panth-banner-slider my-6"
+    x-data="panthBannerSlider(<?= $escaper->escapeHtmlAttr((string)$slideCount) ?>, <?= $escaper->escapeHtmlAttr($block->getSliderConfigJson()) ?>)"
+    x-init="init()"
+    <?php if ($config['pauseOnHover'] ?? true): ?>
+        @mouseenter="pause()"
+        @mouseleave="resume()"
+    <?php endif; ?>
+    @keydown.left.window="prev()"
+    @keydown.right.window="next()"
+    role="region"
+    aria-label="<?= $escaper->escapeHtmlAttr(__('Banner Slider')) ?>"
+    aria-roledescription="carousel"
+>
+    <div class="panth-banner-track"
+         @touchstart.passive="touchStart($event)"
+         @touchend="touchEnd($event)">
+        <?php foreach ($slides as $index => $slide): ?>
+            <?php
+                $images = $helper->getResponsiveImages($slide);
+                $contentHtml = $slide['content_html'] ?? '';
+                $linkUrl = $slide['link_url'] ?? '';
+                $hasLink = !empty($linkUrl) && $linkUrl !== '#';
+                $altText = !empty($slide['alt_text']) ? $slide['alt_text'] : __('Banner %1', $index + 1);
+            ?>
+            <div class="panth-banner-slide"
+                 x-show="current === <?= (int)$index ?>"
+                 <?php if ($effect === 'fade'): ?>
+                     x-transition:enter="transition ease-out duration-[var(--banner-transition-speed,600)ms]"
+                     x-transition:enter-start="opacity-0"
+                     x-transition:enter-end="opacity-100"
+                     x-transition:leave="transition ease-in duration-[var(--banner-transition-speed,600)ms]"
+                     x-transition:leave-start="opacity-100"
+                     x-transition:leave-end="opacity-0"
+                 <?php else: ?>
+                     x-transition:enter="transition ease-out duration-[var(--banner-transition-speed,600)ms]"
+                     x-transition:enter-start="translate-x-full opacity-0"
+                     x-transition:enter-end="translate-x-0 opacity-100"
+                     x-transition:leave="transition ease-in duration-[var(--banner-transition-speed,600)ms]"
+                     x-transition:leave-start="translate-x-0 opacity-100"
+                     x-transition:leave-end="-translate-x-full opacity-0"
+                 <?php endif; ?>
+                 role="tabpanel"
+                 aria-roledescription="slide"
+                 aria-label="<?= $escaper->escapeHtmlAttr(__('Slide %1 of %2', $index + 1, $slideCount)) ?>"
+            >
+                <?php if ($hasLink && empty($contentHtml)): ?>
+                    <a href="<?= $escaper->escapeUrl($linkUrl) ?>" class="block relative w-full h-full">
+                <?php endif; ?>
+
+                <picture class="block w-full h-full">
+                    <?php if (!empty($images['mobile'])): ?>
+                        <source media="(max-width: 767px)" srcset="<?= $escaper->escapeUrl($images['mobile']) ?>">
+                    <?php endif; ?>
+                    <?php if (!empty($images['tablet'])): ?>
+                        <source media="(min-width: 768px) and (max-width: 1023px)" srcset="<?= $escaper->escapeUrl($images['tablet']) ?>">
+                    <?php endif; ?>
+                    <?php if (!empty($images['desktop'])): ?>
+                        <img src="<?= $escaper->escapeUrl($images['desktop']) ?>"
+                             alt="<?= $escaper->escapeHtmlAttr($altText) ?>"
+                             loading="<?= $index === 0 ? 'eager' : 'lazy' ?>"
+                             fetchpriority="<?= $index === 0 ? 'high' : 'auto' ?>"
+                             class="w-full h-full object-cover">
+                    <?php endif; ?>
+                </picture>
+
+                <?php if ($hasLink && empty($contentHtml)): ?>
+                    </a>
+                <?php endif; ?>
+
+                <?php if (!empty($contentHtml)): ?>
+                    <div class="panth-banner-content">
+                        <div class="panth-banner-content-inner">
+                            <?= /* @noEscape — admin-curated CMS content */ $contentHtml ?>
+                        </div>
+                    </div>
+                <?php endif; ?>
+            </div>
+        <?php endforeach; ?>
+
+        <?php if ($showArrows): ?>
+            <button type="button"
+                    class="panth-banner-arrow panth-banner-arrow--prev"
+                    @click="prev()"
+                    aria-label="<?= $escaper->escapeHtmlAttr(__('Previous slide')) ?>">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                </svg>
+            </button>
+            <button type="button"
+                    class="panth-banner-arrow panth-banner-arrow--next"
+                    @click="next()"
+                    aria-label="<?= $escaper->escapeHtmlAttr(__('Next slide')) ?>">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                </svg>
+            </button>
+        <?php endif; ?>
+    </div>
+
+    <?php if ($showDots): ?>
+        <!-- Desktop dots (inside slider, absolute positioned) -->
+        <div class="panth-banner-dots" role="tablist">
+            <?php for ($i = 0; $i < $slideCount; $i++): ?>
+                <button type="button"
+                        class="panth-banner-dot"
+                        :class="current === <?= (int)$i ?> && 'panth-banner-dot--active'"
+                        @click="goTo(<?= (int)$i ?>)"
+                        role="tab"
+                        :aria-selected="current === <?= (int)$i ?>"
+                        aria-label="<?= $escaper->escapeHtmlAttr(__('Go to slide %1', $i + 1)) ?>">
+                </button>
+            <?php endfor; ?>
+        </div>
+    <?php endif; ?>
+
+    <?php if ($slideCount > 1): ?>
+        <!-- Mobile controls bar: dots left + arrows right (below slider) -->
+        <div class="panth-banner-controls">
+            <div class="panth-banner-controls-dots">
+                <?php for ($i = 0; $i < $slideCount; $i++): ?>
+                    <button type="button"
+                            class="panth-banner-controls-dot"
+                            :class="current === <?= (int)$i ?> && 'panth-banner-controls-dot--active'"
+                            @click="goTo(<?= (int)$i ?>)"
+                            aria-label="<?= $escaper->escapeHtmlAttr(__('Slide %1', $i + 1)) ?>">
+                    </button>
+                <?php endfor; ?>
+            </div>
+            <div class="panth-banner-controls-arrows">
+                <button type="button" @click="prev()" aria-label="<?= $escaper->escapeHtmlAttr(__('Previous')) ?>">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                    </svg>
+                </button>
+                <button type="button" @click="next()" aria-label="<?= $escaper->escapeHtmlAttr(__('Next')) ?>">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    <?php endif; ?>
+</div>
+
+<script>
+    function panthBannerSlider(total, config) {
+        return {
+            current: 0,
+            total: total,
+            timer: null,
+            touchStartX: 0,
+            config: config,
+
+            init() {
+                if (this.config.autoplay && this.total > 1) {
+                    this.startAutoplay();
+                }
+            },
+
+            startAutoplay() {
+                this.stopAutoplay();
+                this.timer = setInterval(() => this.next(), this.config.autoplaySpeed || 5000);
+            },
+
+            stopAutoplay() {
+                if (this.timer) {
+                    clearInterval(this.timer);
+                    this.timer = null;
+                }
+            },
+
+            pause() {
+                if (this.config.pauseOnHover) this.stopAutoplay();
+            },
+
+            resume() {
+                if (this.config.autoplay && this.config.pauseOnHover) this.startAutoplay();
+            },
+
+            next() {
+                if (this.config.loop) {
+                    this.current = (this.current + 1) % this.total;
+                } else {
+                    this.current = Math.min(this.current + 1, this.total - 1);
+                }
+            },
+
+            prev() {
+                if (this.config.loop) {
+                    this.current = (this.current - 1 + this.total) % this.total;
+                } else {
+                    this.current = Math.max(this.current - 1, 0);
+                }
+            },
+
+            goTo(index) {
+                this.current = index;
+                if (this.config.autoplay) this.startAutoplay();
+            },
+
+            touchStart(e) {
+                this.touchStartX = e.changedTouches[0].screenX;
+            },
+
+            touchEnd(e) {
+                const diff = this.touchStartX - e.changedTouches[0].screenX;
+                if (Math.abs(diff) > 50) {
+                    diff > 0 ? this.next() : this.prev();
+                    if (this.config.autoplay) this.startAutoplay();
+                }
+            },
+
+            destroy() {
+                this.stopAutoplay();
+            }
+        };
+    }
+</script>
