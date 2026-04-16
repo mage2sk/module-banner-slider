@@ -54,9 +54,14 @@ $showDots = ($config['showDots'] ?? true) && $slideCount > 1;
                         <img src="<?= $escaper->escapeUrl($images['desktop']) ?>"
                              alt="<?= $escaper->escapeHtmlAttr($altText) ?>"
                              loading="<?= $index === 0 ? 'eager' : 'lazy' ?>"
-                             style="width:100%;height:100%;object-fit:cover;display:block;">
+                             style="width:100%;height:100%;object-fit:cover;display:block;"
+                             <?= $index === 0 ? 'fetchpriority="high" decoding="async"' : 'decoding="async"' ?>>
                     <?php endif; ?>
                 </picture>
+
+                <?php if ($hasLink): ?>
+                    </a>
+                <?php endif; ?>
 
                 <?php if (!empty($contentHtml)): ?>
                     <div class="panth-banner-content">
@@ -64,10 +69,6 @@ $showDots = ($config['showDots'] ?? true) && $slideCount > 1;
                             <?= /* @noEscape */ $contentHtml ?>
                         </div>
                     </div>
-                <?php endif; ?>
-
-                <?php if ($hasLink): ?>
-                    </a>
                 <?php endif; ?>
             </div>
         <?php endforeach; ?>
