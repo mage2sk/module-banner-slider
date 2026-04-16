@@ -22,7 +22,9 @@
         },
         "constraint": {
             "PRIMARY": true,
-            "PANTH_BANNER_SLIDER_IDENTIFIER": true
+            "PANTH_BANNER_SLIDER_IDENTIFIER": true,
+            "PANTH_BANNER_SLIDER_IDENTIFIER_STORE": true,
+            "PANTH_BANNER_SLIDER_IDENTIFIER_STORE_ID": true
         }
     },
     "panth_banner_slide": {

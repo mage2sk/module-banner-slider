@@ -28,8 +28,9 @@
         <constraint xsi:type="primary" referenceId="PRIMARY">
             <column name="slider_id"/>
         </constraint>
-        <constraint xsi:type="unique" referenceId="PANTH_BANNER_SLIDER_IDENTIFIER">
+        <constraint xsi:type="unique" referenceId="PANTH_BANNER_SLIDER_IDENTIFIER_STORE">
             <column name="identifier"/>
+            <column name="store_id"/>
         </constraint>
         <index referenceId="PANTH_BANNER_SLIDER_IS_ACTIVE" indexType="btree">
             <column name="is_active"/>
