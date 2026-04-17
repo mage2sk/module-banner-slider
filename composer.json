@@ -2,7 +2,7 @@
     "name": "mage2kishan/module-banner-slider",
     "description": "Panth Banner Slider Module - Responsive banner slider widget with Luma and Hyva theme support",
     "type": "magento2-module",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "license": "proprietary",
     "authors": [
         {
