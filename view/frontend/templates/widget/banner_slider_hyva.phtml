@@ -1,7 +1,7 @@
 <?php
 /**
  * Copyright © Panth Infotech. All rights reserved.
- * Banner Slider — Hyva/Alpine.js Version
+ * Banner Slider - Hyva/Alpine.js Version
  *
  * Uses CSS variables from theme-config.json (banner-slider section)
  * Supports: fade/slide transitions, autoplay, responsive images,
@@ -26,7 +26,7 @@ $showDots = ($config['showDots'] ?? true) && $slideCount > 1;
 ?>
 
 <style>
-    /* Banner Slider — all visual values from CSS variables (theme-config.json) */
+    /* Banner Slider - all visual values from CSS variables (theme-config.json) */
     .panth-banner-slider {
         position: relative;
         width: 100%;
@@ -55,7 +55,7 @@ $showDots = ($config['showDots'] ?? true) && $slideCount > 1;
         display: block;
     }
 
-    /* Content overlay — subtle dark tint for text readability */
+    /* Content overlay - subtle dark tint for text readability */
     .panth-banner-content {
         position: absolute;
         inset: 0;
@@ -74,7 +74,7 @@ $showDots = ($config['showDots'] ?? true) && $slideCount > 1;
         color: #fff;
     }
 
-    /* Navigation arrows — matches Hyva product carousel style */
+    /* Navigation arrows - matches Hyva product carousel style */
     .panth-banner-arrow {
         position: absolute;
         top: 50%;
@@ -106,7 +106,7 @@ $showDots = ($config['showDots'] ?? true) && $slideCount > 1;
         height: 18px;
     }
 
-    /* Pagination dots — matches Hyva snap-marker style */
+    /* Pagination dots - matches Hyva snap-marker style */
     .panth-banner-dots {
         position: absolute;
         bottom: 20px;
@@ -144,7 +144,7 @@ $showDots = ($config['showDots'] ?? true) && $slideCount > 1;
         }
     }
 
-    /* Mobile controls bar: dots left, arrows right — below slider */
+    /* Mobile controls bar: dots left, arrows right - below slider */
     .panth-banner-controls {
         display: none;
     }
@@ -181,7 +181,7 @@ $showDots = ($config['showDots'] ?? true) && $slideCount > 1;
         /* Hide desktop dots (inside slider) */
         .panth-banner-dots { display: none; }
 
-        /* Show mobile controls bar — same style as Hyva product carousel */
+        /* Show mobile controls bar - same style as Hyva product carousel */
         .panth-banner-controls {
             display: flex;
             align-items: center;
@@ -313,7 +313,7 @@ $showDots = ($config['showDots'] ?? true) && $slideCount > 1;
                 <?php if (!empty($contentHtml)): ?>
                     <div class="panth-banner-content">
                         <div class="panth-banner-content-inner">
-                            <?= /* @noEscape — admin-curated CMS content */ $contentHtml ?>
+                            <?= /* @noEscape - admin-curated CMS content */ $contentHtml ?>
                         </div>
                     </div>
                 <?php endif; ?>
