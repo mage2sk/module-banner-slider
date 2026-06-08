@@ -217,6 +217,18 @@
         </settings>
 
         <field name="content_html" formElement="wysiwyg" sortOrder="10">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <!-- Force the classic WYSIWYG (TinyMCE) editor instead of Page Builder for this field. -->
+                    <item name="wysiwygConfigData" xsi:type="array">
+                        <item name="add_variables" xsi:type="boolean">true</item>
+                        <item name="add_widgets" xsi:type="boolean">true</item>
+                        <item name="add_images" xsi:type="boolean">true</item>
+                        <item name="add_directives" xsi:type="boolean">true</item>
+                        <item name="is_pagebuilder_enabled" xsi:type="boolean">false</item>
+                    </item>
+                </item>
+            </argument>
             <settings>
                 <label translate="true">Content Overlay HTML</label>
                 <notice translate="true">Optional HTML content displayed as an overlay on the slide. Supports CMS directives.</notice>
