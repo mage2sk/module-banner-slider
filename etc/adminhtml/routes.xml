@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Panth BannerSlider Admin Routes Configuration
+ *
+ * @category  Panth
+ * @package   Panth_BannerSlider
+ * @author    Panth
+ * @copyright Copyright (c) Panth
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:App/etc/routes.xsd">
+    <router id="admin">
+        <route id="panth_bannerslider" frontName="panth_bannerslider">
+            <module name="Panth_BannerSlider" before="Magento_Backend"/>
+        </route>
+    </router>
+</config>

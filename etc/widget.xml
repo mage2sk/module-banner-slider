@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Panth BannerSlider Widget Configuration
+ *
+ * @category  Panth
+ * @package   Panth_BannerSlider
+ * @author    Panth
+ * @copyright Copyright (c) Panth
+ */
+-->
+<widgets xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Widget:etc/widget.xsd">
+    <widget id="panth_banner_slider" class="Panth\BannerSlider\Block\Widget\BannerSlider">
+        <label translate="true">Banner Slider</label>
+        <description translate="true">Display banner slider by identifier (e.g., homepage_banner, category_banner)</description>
+        <parameters>
+            <parameter name="identifier" xsi:type="text" required="true" visible="true" sort_order="10">
+                <label translate="true">Slider Identifier</label>
+                <description translate="true">Enter the identifier configured in system config (e.g., homepage_banner, category_banner, product_banner)</description>
+            </parameter>
+            <parameter name="template" xsi:type="select" visible="true" sort_order="20">
+                <label translate="true">Template</label>
+                <description translate="true">Select template (auto-detection will override this based on theme)</description>
+                <options>
+                    <option name="default" value="Panth_BannerSlider::widget/banner_slider.phtml" selected="true">
+                        <label translate="true">Default Template (Luma)</label>
+                    </option>
+                    <option name="hyva" value="Panth_BannerSlider::widget/banner_slider_hyva.phtml">
+                        <label translate="true">Hyva Template</label>
+                    </option>
+                </options>
+            </parameter>
+        </parameters>
+    </widget>
+</widgets>
