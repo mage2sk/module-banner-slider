@@ -1,0 +1,17 @@
+{
+  "banner-border-radius": "0",
+  "banner-height-desktop": "500px",
+  "banner-height-tablet": "400px",
+  "banner-height-mobile": "320px",
+  "banner-transition-speed": "600",
+  "banner-overlay-bg": "rgba(0,0,0,0.3)",
+  "banner-arrow-bg": "rgba(0,0,0,0.4)",
+  "banner-arrow-color": "#fff",
+  "banner-arrow-hover-bg": "rgba(0,0,0,0.7)",
+  "banner-arrow-size": "44px",
+  "banner-arrow-size-mobile": "36px",
+  "banner-dot-size": "10px",
+  "banner-dot-color": "rgba(255,255,255,0.5)",
+  "banner-dot-active-color": "#fff",
+  "banner-dot-active-width": "24px"
+}

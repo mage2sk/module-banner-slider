@@ -1,0 +1,125 @@
+<?php
+/**
+ * Copyright (c) Panth Infotech. All rights reserved.
+ * Banner Slider - Luma/RequireJS Version
+ *
+ * @var $block \Panth\BannerSlider\Block\Widget\BannerSlider
+ * @var $escaper \Magento\Framework\Escaper
+ */
+
+if (!$block->canDisplay()) {
+    return;
+}
+
+$slides = $block->getSlides();
+$uniqueId = $block->getUniqueId();
+$helper = $block->getHelper();
+$config = $block->getSliderConfig();
+$slideCount = count($slides);
+$showArrows = ($config['showArrows'] ?? true) && $slideCount > 1;
+$showDots = ($config['showDots'] ?? true) && $slideCount > 1;
+$showPause = ($config['autoplay'] ?? true) && $slideCount > 1;
+?>
+
+<div class="panth-banner-slider"
+     id="<?= $escaper->escapeHtmlAttr($uniqueId) ?>"
+     data-mage-init="<?= $escaper->escapeHtmlAttr($block->getMageInitJson()) ?>"
+     tabindex="0"
+     role="region"
+     aria-roledescription="carousel"
+     aria-label="<?= $escaper->escapeHtmlAttr(__('Banner Slider')) ?>">
+    <div class="panth-banner-track" aria-live="<?= $showPause ? 'off' : 'polite' ?>">
+        <?php foreach ($slides as $index => $slide): ?>
+            <?php
+                $images = $helper->getResponsiveImages($slide);
+                $contentHtml = $block->getContentHtml($slide);
+                $linkUrl = $helper->getLinkUrl($slide);
+                $linkTarget = $helper->getLinkTarget($slide);
+                $hasLink = $linkUrl !== '';
+                $altText = !empty($slide['alt_text']) ? $slide['alt_text'] : __('Banner %1', $index + 1);
+            ?>
+            <div class="panth-banner-slide<?= $index === 0 ? ' panth-banner-slide--active' : '' ?>"
+                 data-slide="<?= (int)$index ?>"
+                 role="group"
+                 aria-roledescription="slide"
+                 aria-label="<?= $escaper->escapeHtmlAttr(__('%1 of %2', $index + 1, $slideCount)) ?>"
+                 <?php if ($index !== 0): ?>aria-hidden="true" inert<?php endif; ?>
+                 style="<?= $index !== 0 ? 'opacity:0; pointer-events:none;' : '' ?>">
+                <?php if ($hasLink): ?>
+                    <a href="<?= $escaper->escapeUrl($linkUrl) ?>"
+                       class="panth-banner-slide-link"
+                       <?php if ($linkTarget !== ''): ?>target="_blank" rel="noopener noreferrer"<?php endif; ?>>
+                <?php endif; ?>
+
+                <picture style="display:block;width:100%;height:100%;">
+                    <?php if (!empty($images['mobile'])): ?>
+                        <source media="(max-width: 767px)" srcset="<?= $escaper->escapeUrl($images['mobile']) ?>">
+                    <?php endif; ?>
+                    <?php if (!empty($images['tablet'])): ?>
+                        <source media="(min-width: 768px) and (max-width: 1023px)" srcset="<?= $escaper->escapeUrl($images['tablet']) ?>">
+                    <?php endif; ?>
+                    <?php if (!empty($images['desktop'])): ?>
+                        <img src="<?= $escaper->escapeUrl($images['desktop']) ?>"
+                             alt="<?= $escaper->escapeHtmlAttr($altText) ?>"
+                             loading="<?= $index === 0 ? 'eager' : 'lazy' ?>"
+                             style="width:100%;height:100%;object-fit:cover;display:block;"
+                             <?= $index === 0 ? 'fetchpriority="high" decoding="async"' : 'decoding="async"' ?>>
+                    <?php endif; ?>
+                </picture>
+
+                <?php if ($hasLink): ?>
+                    </a>
+                <?php endif; ?>
+
+                <?php if (!empty($contentHtml)): ?>
+                    <div class="panth-banner-content">
+                        <div class="panth-banner-content-inner">
+                            <?= /* @noEscape */ $contentHtml ?>
+                        </div>
+                    </div>
+                <?php endif; ?>
+            </div>
+        <?php endforeach; ?>
+
+        <?php if ($showArrows): ?>
+            <button type="button" class="panth-banner-arrow panth-banner-arrow--prev" data-action="prev"
+                    aria-label="<?= $escaper->escapeHtmlAttr(__('Previous slide')) ?>">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                </svg>
+            </button>
+            <button type="button" class="panth-banner-arrow panth-banner-arrow--next" data-action="next"
+                    aria-label="<?= $escaper->escapeHtmlAttr(__('Next slide')) ?>">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                </svg>
+            </button>
+        <?php endif; ?>
+
+        <?php if ($showPause): ?>
+            <button type="button" class="panth-banner-pause" data-action="toggle"
+                    aria-label="<?= $escaper->escapeHtmlAttr(__('Pause slideshow')) ?>">
+                <svg class="panth-banner-icon-pause" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/>
+                </svg>
+                <svg class="panth-banner-icon-play" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.5-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5z"/>
+                </svg>
+            </button>
+        <?php endif; ?>
+    </div>
+
+    <?php if ($showDots): ?>
+        <div class="panth-banner-dots">
+            <?php for ($i = 0; $i < $slideCount; $i++): ?>
+                <button type="button"
+                        class="panth-banner-dot<?= $i === 0 ? ' panth-banner-dot--active' : '' ?>"
+                        data-action="goto"
+                        data-index="<?= (int)$i ?>"
+                        aria-current="<?= $i === 0 ? 'true' : 'false' ?>"
+                        aria-label="<?= $escaper->escapeHtmlAttr(__('Go to slide %1', $i + 1)) ?>">
+                </button>
+            <?php endfor; ?>
+        </div>
+    <?php endif; ?>
+</div>

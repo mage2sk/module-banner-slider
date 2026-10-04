@@ -1,0 +1,62 @@
+{
+  "slider": {
+    "identifier": "homepage_hero",
+    "title": "Homepage Hero Slider",
+    "is_active": 1,
+    "autoplay": 1,
+    "autoplay_speed": 5000,
+    "transition_speed": 600,
+    "effect": "fade",
+    "is_loop": 1,
+    "show_arrows": 1,
+    "show_dots": 1,
+    "pause_on_hover": 1,
+    "store_id": 0
+  },
+  "slides": [
+    {
+      "title": "Summer Collection 2026",
+      "is_active": 1,
+      "desktop_image": "slide_homepage_hero_1.jpg",
+      "mobile_image": "slide_homepage_hero_1_mobile.jpg",
+      "content_html": "<div style=\"text-align:center;color:#fff;\"><p style=\"font-size:14px;letter-spacing:3px;text-transform:uppercase;margin:0 0 8px;opacity:0.85;\">New Season</p><h2 style=\"font-size:clamp(28px,5vw,44px);font-weight:700;margin:0 0 10px;line-height:1.15;\">Summer Collection 2026</h2><p style=\"font-size:clamp(14px,2.5vw,18px);margin:0 0 20px;opacity:0.9;\">Up to 40% off on selected styles</p><a href=\"/women.html\" style=\"display:inline-block;padding:12px 30px;background:#fff;color:#0D9488;font-weight:600;text-decoration:none;border-radius:6px;font-size:14px;\">Shop Now</a></div>",
+      "link_url": "",
+      "alt_text": "Summer Collection 2026",
+      "sort_order": 1,
+      "store_id": 0
+    },
+    {
+      "title": "New Arrivals",
+      "is_active": 1,
+      "desktop_image": "slide_homepage_hero_2.jpg",
+      "mobile_image": "slide_homepage_hero_2_mobile.jpg",
+      "content_html": "",
+      "link_url": "/what-is-new.html",
+      "alt_text": "New Arrivals - Shop Latest Trends",
+      "sort_order": 2,
+      "store_id": 0
+    },
+    {
+      "title": "Free Shipping Promo",
+      "is_active": 1,
+      "desktop_image": "slide_homepage_hero_3.jpg",
+      "mobile_image": "slide_homepage_hero_3_mobile.jpg",
+      "content_html": "<div style=\"text-align:center;color:#fff;\"><div style=\"display:inline-block;padding:5px 14px;background:rgba(255,255,255,0.15);border-radius:20px;font-size:12px;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;\">Limited Time</div><h2 style=\"font-size:clamp(30px,6vw,48px);font-weight:800;margin:0 0 6px;line-height:1.1;\">FREE SHIPPING</h2><p style=\"font-size:clamp(15px,3vw,20px);margin:0 0 4px;font-weight:300;\">On all orders over $50</p><p style=\"font-size:13px;opacity:0.7;margin:0 0 18px;\">No code needed</p><a href=\"/sale.html\" style=\"display:inline-block;padding:12px 32px;background:#F97316;color:#fff;font-weight:600;text-decoration:none;border-radius:6px;font-size:14px;\">Start Shopping</a></div>",
+      "link_url": "",
+      "alt_text": "Free shipping on orders over $50",
+      "sort_order": 3,
+      "store_id": 0
+    },
+    {
+      "title": "Flash Deals",
+      "is_active": 1,
+      "desktop_image": "slide_homepage_hero_4.jpg",
+      "mobile_image": "slide_homepage_hero_4_mobile.jpg",
+      "content_html": "<div style=\"text-align:center;color:#fff;\"><p style=\"font-size:13px;letter-spacing:2px;text-transform:uppercase;margin:0 0 8px;opacity:0.85;\">Ends Tonight</p><h2 style=\"font-size:clamp(26px,5vw,38px);font-weight:700;margin:0 0 10px;line-height:1.2;\">Flash Deals</h2><p style=\"font-size:clamp(13px,2.5vw,16px);margin:0 0 16px;opacity:0.9;\">Extra 25% off with code FLASH25</p><div style=\"display:flex;gap:10px;justify-content:center;flex-wrap:wrap;\"><a href=\"/sale.html\" style=\"display:inline-block;padding:10px 22px;background:#fff;color:#C2410C;font-weight:600;text-decoration:none;border-radius:6px;font-size:13px;\">Shop Deals</a><a href=\"/sale.html\" style=\"display:inline-block;padding:10px 22px;border:2px solid #fff;color:#fff;font-weight:500;text-decoration:none;border-radius:6px;font-size:13px;\">View All</a></div></div>",
+      "link_url": "",
+      "alt_text": "Flash Deals - Save big today",
+      "sort_order": 4,
+      "store_id": 0
+    }
+  ]
+}

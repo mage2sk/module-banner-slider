@@ -1,0 +1,107 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+
+    <!-- Image Uploader Virtual Type -->
+    <virtualType name="Panth\BannerSlider\ImageUploader" type="Magento\Catalog\Model\ImageUploader">
+        <arguments>
+            <argument name="baseTmpPath" xsi:type="string">bannerslider/tmp</argument>
+            <argument name="basePath" xsi:type="string">bannerslider</argument>
+            <argument name="allowedExtensions" xsi:type="array">
+                <item name="jpg" xsi:type="string">jpg</item>
+                <item name="jpeg" xsi:type="string">jpeg</item>
+                <item name="gif" xsi:type="string">gif</item>
+                <item name="png" xsi:type="string">png</item>
+                <item name="webp" xsi:type="string">webp</item>
+            </argument>
+            <argument name="allowedMimeTypes" xsi:type="array">
+                <item name="jpg" xsi:type="string">image/jpg</item>
+                <item name="jpeg" xsi:type="string">image/jpeg</item>
+                <item name="gif" xsi:type="string">image/gif</item>
+                <item name="png" xsi:type="string">image/png</item>
+                <item name="webp" xsi:type="string">image/webp</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <!-- Inject the same ImageUploader into Upload controller -->
+    <type name="Panth\BannerSlider\Controller\Adminhtml\Upload\Image">
+        <arguments>
+            <argument name="imageUploader" xsi:type="object">Panth\BannerSlider\ImageUploader</argument>
+        </arguments>
+    </type>
+
+    <!-- Inject the same ImageUploader into Slide Save controller -->
+    <type name="Panth\BannerSlider\Controller\Adminhtml\Slide\Save">
+        <arguments>
+            <argument name="imageUploader" xsi:type="object">Panth\BannerSlider\ImageUploader</argument>
+            <argument name="dataPersistor" xsi:type="object">Magento\Framework\App\Request\DataPersistorInterface</argument>
+        </arguments>
+    </type>
+
+    <type name="Panth\BannerSlider\Controller\Adminhtml\Slider\Save">
+        <arguments>
+            <argument name="dataPersistor" xsi:type="object">Magento\Framework\App\Request\DataPersistorInterface</argument>
+        </arguments>
+    </type>
+
+    <type name="Panth\BannerSlider\Ui\DataProvider\SliderFormDataProvider">
+        <arguments>
+            <argument name="dataPersistor" xsi:type="object">Magento\Framework\App\Request\DataPersistorInterface</argument>
+        </arguments>
+    </type>
+
+    <virtualType name="Panth\BannerSlider\Ui\SliderKeywordFilter" type="Panth\BannerSlider\Ui\DataProvider\KeywordFilter">
+        <arguments>
+            <argument name="columns" xsi:type="array">
+                <item name="title" xsi:type="string">title</item>
+                <item name="identifier" xsi:type="string">identifier</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Panth\BannerSlider\Ui\SlideKeywordFilter" type="Panth\BannerSlider\Ui\DataProvider\KeywordFilter">
+        <arguments>
+            <argument name="columns" xsi:type="array">
+                <item name="title" xsi:type="string">title</item>
+                <item name="alt_text" xsi:type="string">alt_text</item>
+                <item name="link_url" xsi:type="string">link_url</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Panth\BannerSlider\Ui\SliderFilterPool" type="Magento\Framework\View\Element\UiComponent\DataProvider\FilterPool">
+        <arguments>
+            <argument name="appliers" xsi:type="array">
+                <item name="regular" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\RegularFilter</item>
+                <item name="fulltext" xsi:type="object">Panth\BannerSlider\Ui\SliderKeywordFilter</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Panth\BannerSlider\Ui\SlideFilterPool" type="Magento\Framework\View\Element\UiComponent\DataProvider\FilterPool">
+        <arguments>
+            <argument name="appliers" xsi:type="array">
+                <item name="regular" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\RegularFilter</item>
+                <item name="fulltext" xsi:type="object">Panth\BannerSlider\Ui\SlideKeywordFilter</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Panth\BannerSlider\Ui\SliderReporting" type="Magento\Framework\View\Element\UiComponent\DataProvider\Reporting">
+        <arguments>
+            <argument name="filterPool" xsi:type="object">Panth\BannerSlider\Ui\SliderFilterPool</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Panth\BannerSlider\Ui\SlideReporting" type="Magento\Framework\View\Element\UiComponent\DataProvider\Reporting">
+        <arguments>
+            <argument name="filterPool" xsi:type="object">Panth\BannerSlider\Ui\SlideFilterPool</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Panth\BannerSlider\Ui\SliderGridDataProvider" type="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider">
+        <arguments>
+            <argument name="reporting" xsi:type="object">Panth\BannerSlider\Ui\SliderReporting</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Panth\BannerSlider\Ui\SlideGridDataProvider" type="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider">
+        <arguments>
+            <argument name="reporting" xsi:type="object">Panth\BannerSlider\Ui\SlideReporting</argument>
+        </arguments>
+    </virtualType>
+</config>
