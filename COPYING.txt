@@ -1,12 +1,6 @@
-Proprietary Software Notice
+Magento 2 Banner Slider
 
-Copyright (c) 2026 Panth Infotech. All rights reserved.
+Copyright (c) 2026 Kishan Savaliya (Panth Infotech)
 
-This software is proprietary and confidential. No part of this software may be
-reproduced, distributed, or transmitted in any form or by any means, including
-photocopying, recording, or other electronic or mechanical methods, without the
-prior written permission of Panth Infotech.
-
-For permission requests, contact:
-Panth Infotech
-Email: kishansavaliyakb@gmail.com
+Magento 2 Banner Slider is free and open-source software released under the MIT License.
+See LICENSE.txt for the full license text.
