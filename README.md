@@ -228,7 +228,7 @@ The tables `panth_banner_slider` and `panth_banner_slide` and the images in `pub
 
 ## License
 
-Commercial software license. See [LICENSE.txt](LICENSE.txt) in this repository.
+Free and open source under the MIT License. See [LICENSE.txt](LICENSE.txt).
 
 ## Changelog
 
